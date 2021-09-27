@@ -16,13 +16,13 @@ if __name__ == '__main__':
     m.display_information()
     m.print_successors()
 
-    print(type(m.get_successors()))
-    print(len(m.get_successors()))
+    # print(type(m.get_successors()))
+    # print(len(m.get_successors()))
+    #
+    # print(m.get_successors_states_grid(2))
 
-    print(m.get_successors_states_grid(2))
-
-    for i in range(len(m.get_successors())):
-        print("\nNew Node")
-        ms_n = magic_square_node(m.get_successors_states_grid(i))
-        ms_n.run_initialization()
-        ms_n.display_information()
+    # for i in range(len(m.get_successors())):
+    #     print("\nNew Node")
+    #     ms_n = magic_square_node(m.get_successors_states_grid(i))
+    #     ms_n.run_initialization()
+    #     ms_n.display_information()
