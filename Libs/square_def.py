@@ -7,7 +7,7 @@ def display_grid(grid):
         print(grid[i])
 
 
-class magic_square_state:
+class magic_square_node:
     def __init__(self, grid_start_state, parent=None):
         self.__grid_start_state = grid_start_state
         self.parent = parent
@@ -81,54 +81,28 @@ class magic_square_state:
         print("Available numbers: ", self.available_numbers)
         print("Available coordinates: ", self.available_coordinates)
 
-    # def print_successors(grid, available_coordinates, available_numbers):
-    #     order = [2, 0, 1]
-    #     possible_combinations = []
-    #     grid = grid
-    #     return_successor_list = []
-    #     for i in range(len(available_numbers)):
-    #         possible_combinations.append(available_numbers)
-    #         available_numbers = [available_numbers[i] for i in order]
-    #
-    #     print(possible_combinations)
-    #     # print("")
-    #     for no_comb in range(3):
-    #         print("")
-    #         an_comb = possible_combinations[no_comb]
-    #         for i in range(3):
-    #             coord = available_coordinates[i]
-    #             x = int(coord[0])
-    #             y = int(coord[1])
-    #             grid[x][y] = an_comb[i]
-    #             # print("")
-    #         display_grid(grid)
-    #         return_successor_list.append(grid)
-    #         # return_successor_list.append(new_grid)
-    #         # print("")
-    #     # return return_successor_list
-    #     return True
-
     def set_successors(self):
         new_grid = copy.deepcopy(self.get_start_state())
         order = [2, 0, 1]
         possible_combinations = []
         aval_numbers = self.available_numbers
-        for i in range(len(aval_numbers)):
-            possible_combinations.append(aval_numbers)
-            aval_numbers = [aval_numbers[i] for i in order]
+        if len(self.available_numbers) != 0:
+            for i in range(len(aval_numbers)):
+                possible_combinations.append(aval_numbers)
+                aval_numbers = [aval_numbers[i] for i in order]
 
         # print("\nPossible Combinations: ", possible_combinations)
-
-        for i in range(3):
-            comb = possible_combinations[i]
-            for j in range(3):
-                coord = self.available_coordinates[j]
-                x = int(coord[0])
-                y = int(coord[1])
-                new_grid[x][y] = comb[j]
+        if len(possible_combinations) != 0:
+            for i in range(3):
+                comb = possible_combinations[i]
+                for j in range(3):
+                    coord = self.available_coordinates[j]
+                    x = int(coord[0])
+                    y = int(coord[1])
+                    new_grid[x][y] = comb[j]
             # self.display_information()
-            grid_copy = copy.deepcopy(new_grid)
-            self.successor_state.append(grid_copy)
+                grid_copy = copy.deepcopy(new_grid)
+                self.successor_state.append(grid_copy)
             # self.successor_state
 
     def get_successors(self):
@@ -139,3 +113,12 @@ class magic_square_state:
         for successor in self.successor_state:
             display_grid(successor)
             print("")
+
+    def get_successors_states_grid(self, index):
+        empty_list=[]
+        if len(self.successor_state) != 0:
+            for successor in self.successor_state:
+                empty_list.append(successor)
+            return empty_list[index]
+        return empty_list
+
