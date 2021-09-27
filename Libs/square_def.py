@@ -7,8 +7,16 @@ def display_grid(grid):
         print(grid[i])
 
 
+def a_star_search(starting_node):
+    open_set = []
+    closed_set = []
+
+
+
 class magic_square_node:
     def __init__(self, grid_start_state, parent=None):
+        self.__numberOfRows = 3
+        self.__numberOfCols = 3
         self.__grid_start_state = grid_start_state
         self.parent = parent
         self.successor_state = []
@@ -31,9 +39,9 @@ class magic_square_node:
     def set_sum_rows(self):
         sum = 0
         return_list = []
-        for i in range(3):
-            for j in range(3):
-                sum += self.__grid_start_state[i][j]
+        for x in range(self.__numberOfRows):
+            for y in range(self.__numberOfCols):
+                sum += self.__grid_start_state[x][y]
             return_list.append(sum)
             sum = 0
         self.sum_rows = return_list
@@ -41,9 +49,9 @@ class magic_square_node:
     def set_sum_cols(self):
         sum = 0
         return_list = []
-        for i in range(3):
-            for j in range(3):
-                sum += self.__grid_start_state[j][i]
+        for x in range(self.__numberOfRows):
+            for y in range(self.__numberOfCols):
+                sum += self.__grid_start_state[y][x]
             return_list.append(sum)
             sum = 0
         self.sum_cols = return_list
@@ -51,22 +59,23 @@ class magic_square_node:
     def set_available_numbers(self):
         check_set = set()
         unused_numbers_list = []
-        for i in range(3):
-            for j in range(3):
-                val = self.__grid_start_state[i][j]
+
+        # Going through all the 3 x 3 table
+        for x in range(self.__numberOfRows):
+            for y in range(self.__numberOfCols):
+                val = self.__grid_start_state[x][y]
                 check_set.add(val)
-        for i in range(9):
-            index = i + 1
+        for index in range(1, 10):
             if index not in check_set:
                 unused_numbers_list.append(index)
         self.available_numbers = unused_numbers_list
 
     def set_available_coordinates(self):
         coordinates_list = []
-        for i in range(3):
-            for j in range(3):
-                if self.__grid_start_state[i][j] == 0:
-                    coordinate = (i, j)
+        for x in range(self.__numberOfRows):
+            for y in range(self.__numberOfCols):
+                if self.__grid_start_state[x][y] == 0:
+                    coordinate = (x, y)
                     coordinates_list.append(coordinate)
         self.available_coordinates = coordinates_list
 
@@ -86,30 +95,6 @@ class magic_square_node:
         print("Available numbers: ", self.available_numbers)
         print("Available coordinates: ", self.available_coordinates)
         print("g is {:d} and h is {:d}".format(self.g, self.h))
-
-    # def set_successors(self):
-    #     new_grid = copy.deepcopy(self.get_start_state())
-    #     order = [2, 0, 1]
-    #     possible_combinations = []
-    #     aval_numbers = self.available_numbers
-    #     if len(self.available_numbers) != 0:
-    #         for i in range(len(aval_numbers)):
-    #             possible_combinations.append(aval_numbers)
-    #             aval_numbers = [aval_numbers[i] for i in order]
-    #
-    #     # print("\nPossible Combinations: ", possible_combinations)
-    #     if len(possible_combinations) != 0:
-    #         for i in range(3):
-    #             comb = possible_combinations[i]
-    #             for j in range(3):
-    #                 coord = self.available_coordinates[j]
-    #                 x = int(coord[0])
-    #                 y = int(coord[1])
-    #                 new_grid[x][y] = comb[j]
-    #         # self.display_information()
-    #             grid_copy = copy.deepcopy(new_grid)
-    #             self.successor_state.append(grid_copy)
-    #         # self.successor_state
 
     def set_successors(self):
         new_grid = copy.deepcopy(self.get_start_state())
@@ -142,6 +127,6 @@ class magic_square_node:
 
     def set_g(self):
         self.g = sum(self.sum_rows) + sum(self.sum_cols)
-        
+
     def set_h(self):
         self.h = 90 - self.g
