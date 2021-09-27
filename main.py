@@ -20,6 +20,7 @@ def sum_rows(grid):
         sum = 0
     return return_list
 
+
 def sum_col(grid):
     sum = 0
     return_list = []
@@ -30,6 +31,7 @@ def sum_col(grid):
         sum = 0
     return return_list
 
+
 def get_available_numbers(grid):
     check_set = set()
     unused_numbers_list = []
@@ -38,11 +40,43 @@ def get_available_numbers(grid):
             val = grid[i][j]
             check_set.add(val)
     for i in range(9):
-        index = i+1
+        index = i + 1
         if index not in check_set:
             unused_numbers_list.append(index)
     return unused_numbers_list
 
+
+def get_available_coordinates(grid):
+    coordinates_list = []
+    for i in range(3):
+        for j in range(3):
+            if grid[i][j] == 0:
+                coordinate = (i, j)
+                coordinates_list.append(coordinate)
+    return coordinates_list
+
+
+def get_succesors(grid, available_coordinates, available_numbers):
+    order = [2, 0, 1]
+    possible_combinations = []
+    for i in range(len(available_numbers)):
+        possible_combinations.append(available_numbers)
+        available_numbers = [available_numbers[i] for i in order]
+
+    print(possible_combinations)
+    # print("")
+    for no_comb in range(3):
+        print("")
+        an_comb = possible_combinations[no_comb]
+        for i in range(3):
+            coord = available_coordinates[i]
+            x = int(coord[0])
+            y = int(coord[1])
+            grid[x][y] = an_comb[i]
+            # print("")
+        display_grid(grid)
+        # print("")
+    return True
 
 
 # Press the green button in the gutter to run the script.
@@ -53,3 +87,7 @@ if __name__ == '__main__':
     print(sum_col(grid))
     print("")
     print(get_available_numbers(grid))
+    print("")
+    print(get_available_coordinates(grid))
+
+    print(get_succesors(grid, get_available_coordinates(grid), get_available_numbers(grid)))
