@@ -76,6 +76,8 @@ class magic_square_node:
         self.set_available_numbers()
         self.set_available_coordinates()
         self.set_successors()
+        self.set_g()
+        self.set_h()
 
     def display_information(self):
         self.display_grid()
@@ -83,6 +85,7 @@ class magic_square_node:
         print("Sum of Rows:", self.sum_rows)
         print("Available numbers: ", self.available_numbers)
         print("Available coordinates: ", self.available_coordinates)
+        print("g is {:d} and h is {:d}".format(self.g, self.h))
 
     # def set_successors(self):
     #     new_grid = copy.deepcopy(self.get_start_state())
@@ -120,8 +123,6 @@ class magic_square_node:
                 grid_copy = copy.deepcopy(new_grid)
                 self.successor_state.append(grid_copy)
 
-
-
     def get_successors(self):
         return self.successor_state
 
@@ -132,10 +133,15 @@ class magic_square_node:
             print("")
 
     def get_successors_states_grid(self, index):
-        empty_list=[]
+        empty_list = []
         if len(self.successor_state) != 0:
             for successor in self.successor_state:
                 empty_list.append(successor)
             return empty_list[index]
         return empty_list
 
+    def set_g(self):
+        self.g = sum(self.sum_rows) + sum(self.sum_cols)
+        
+    def set_h(self):
+        self.h = 90 - self.g

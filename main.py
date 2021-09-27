@@ -21,8 +21,9 @@ if __name__ == '__main__':
     #
     # print(m.get_successors_states_grid(2))
 
-    # for i in range(len(m.get_successors())):
-    #     print("\nNew Node")
-    #     ms_n = magic_square_node(m.get_successors_states_grid(i))
-    #     ms_n.run_initialization()
-    #     ms_n.display_information()
+    for i in range(len(m.get_successors())):
+        print("\nNew Node: ", i)
+        ms_n = magic_square_node(m.get_successors_states_grid(i),m)
+        ms_n.run_initialization()
+        ms_n.display_information()
+        ms_n.print_successors()
