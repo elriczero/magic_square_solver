@@ -11,26 +11,45 @@ def display_grid(grid):
 
 
 def sum_rows(grid):
-    f_row = grid[0]
-    s_row = grid[1]
-    t_row = grid[2]
-    sum_f_row = 0
-    sum_s_row = 0
-    sum_t_row = 0
-    for i in f_row:
-        sum_f_row += i
-    for i in s_row:
-        sum_s_row += i
-    for i in t_row:
-        sum_t_row += i
-    sum_rows_list = [sum_f_row, sum_s_row, sum_t_row]
-    return sum_rows_list
+    sum = 0
+    return_list = []
+    for i in range(3):
+        for j in range(3):
+            sum += grid[i][j]
+        return_list.append(sum)
+        sum = 0
+    return return_list
 
 def sum_col(grid):
+    sum = 0
+    return_list = []
     for i in range(3):
+        for j in range(3):
+            sum += grid[j][i]
+        return_list.append(sum)
+        sum = 0
+    return return_list
+
+def get_available_numbers(grid):
+    check_set = set()
+    unused_numbers_list = []
+    for i in range(3):
+        for j in range(3):
+            val = grid[i][j]
+            check_set.add(val)
+    for i in range(9):
+        index = i+1
+        if index not in check_set:
+            unused_numbers_list.append(index)
+    return unused_numbers_list
+
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     display_grid(grid)
+    print("")
     print(sum_rows(grid))
+    print(sum_col(grid))
+    print("")
+    print(get_available_numbers(grid))
