@@ -1,5 +1,6 @@
 import copy
 
+
 def display_grid(grid):
     # Display the 3x3 Display
     for i in range(3):
@@ -71,6 +72,7 @@ class magic_square_state:
         self.set_sum_rows()
         self.set_available_numbers()
         self.set_available_coordinates()
+        self.set_successors()
 
     def display_information(self):
         self.display_grid()
@@ -79,7 +81,7 @@ class magic_square_state:
         print("Available numbers: ", self.available_numbers)
         print("Available coordinates: ", self.available_coordinates)
 
-    # def get_successors(grid, available_coordinates, available_numbers):
+    # def print_successors(grid, available_coordinates, available_numbers):
     #     order = [2, 0, 1]
     #     possible_combinations = []
     #     grid = grid
@@ -106,7 +108,7 @@ class magic_square_state:
     #     # return return_successor_list
     #     return True
 
-    def get_successors(self):
+    def set_successors(self):
         new_grid = copy.deepcopy(self.get_start_state())
         order = [2, 0, 1]
         possible_combinations = []
@@ -115,7 +117,7 @@ class magic_square_state:
             possible_combinations.append(aval_numbers)
             aval_numbers = [aval_numbers[i] for i in order]
 
-        print("\nPossible Combinations: ", possible_combinations)
+        # print("\nPossible Combinations: ", possible_combinations)
 
         for i in range(3):
             comb = possible_combinations[i]
@@ -124,9 +126,16 @@ class magic_square_state:
                 x = int(coord[0])
                 y = int(coord[1])
                 new_grid[x][y] = comb[j]
-            print("")
-            self.display_information()
-            var = copy.deepcopy(new_grid)
-            self.successor_state.append(var)
-            print(self.successor_state)
+            # self.display_information()
+            grid_copy = copy.deepcopy(new_grid)
+            self.successor_state.append(grid_copy)
+            # self.successor_state
 
+    def get_successors(self):
+        return self.successor_state
+
+    def print_successors(self):
+        print("\nSuccessor States are:")
+        for successor in self.successor_state:
+            display_grid(successor)
+            print("")

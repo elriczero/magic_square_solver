@@ -54,7 +54,7 @@ from square_def import magic_square_state
 #     return coordinates_list
 #
 #
-# def get_successors(grid, available_coordinates, available_numbers):
+# def print_successors(grid, available_coordinates, available_numbers):
 #     order = [2, 0, 1]
 #     possible_combinations = []
 #     grid = grid
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     # print("")
     # print(get_available_coordinates(grid))
     #
-    # print(get_successors(grid, get_available_coordinates(grid), get_available_numbers(grid)))
+    # print(print_successors(grid, get_available_coordinates(grid), get_available_numbers(grid)))
     #
     # display_grid(grid)
 
@@ -105,5 +105,6 @@ if __name__ == '__main__':
     m = magic_square_state(grid)
     m.run_initialization()
     m.display_information()
-    m.get_successors()
-    print("")
+    m.print_successors()
+    # m.successor_state
+    # print(m.successor_state)
