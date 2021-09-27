@@ -7,10 +7,61 @@ def display_grid(grid):
         print(grid[i])
 
 
+def node_backchain(end_node):
+    return_path = []
+    while end_node:
+        new_grid = copy.deepcopy(end_node.get_start_state())
+        return_path.append(new_grid)
+        end_node = end_node.get_parent()
+    return_path.reverse()
+    return return_path
+
+
 def a_star_search(starting_node):
+    solutionFound = False
+    nodes_visited = 0
     open_set = []
     closed_set = []
+    open_set.append(starting_node)
 
+    while open_set:
+        winner_index = 0
+        winner_g_value = 90
+        if len(open_set) > 1:
+            for index in range(len(open_set)):
+                if (open_set[index].get_h() < winner_g_value):
+                    winner_g_value = open_set[index].get_h()
+                    winner_index = index
+            open_set_node = open_set.pop(winner_index)
+        else:
+            open_set_node = open_set.pop(winner_index)  # Start exploring Open Set Node
+
+        print("\nWinner node is: {:d}\n_________________________".format(winner_index))
+        open_set_node.display_information()
+
+        closed_set.append(open_set_node)  # Add the node to the closet set
+        nodes_visited += 1
+        # Check if Magic Square node is already completed
+        if open_set_node.isMagicSquareCompleted():
+            solutionFound = True
+            print("Solution was found at ", nodes_visited)
+            node_backchain_list = node_backchain(open_set_node)
+            print("")
+            for grid in node_backchain_list:
+                display_grid(grid)
+                print("")
+            return solutionFound
+
+        print("\nChildren nodes are: \n__________________________")
+        for i in range(len(open_set_node.get_successors())):
+            print("\nNew Node: ", i)
+            ms_n = magic_square_node(open_set_node.get_successors_states_grid(i), open_set_node)
+            ms_n.run_initialization()
+            ms_n.display_information()
+            open_set.append(ms_n)
+            # ms_n.print_successors()
+    print("No solution was found...")
+    return solutionFound
 
 
 class magic_square_node:
@@ -27,6 +78,9 @@ class magic_square_node:
         self.f = 0
         self.g = 0
         self.h = 0
+
+    def get_parent(self):
+        return self.parent
 
     def get_start_state(self):
         return self.__grid_start_state
@@ -130,3 +184,15 @@ class magic_square_node:
 
     def set_h(self):
         self.h = 90 - self.g
+
+    def get_g(self):
+        return self.g
+
+    def get_h(self):
+        return self.h
+
+    def isMagicSquareCompleted(self):
+        if self.g == 90 and len(self.available_numbers) == 0:
+            return True
+        else:
+            return False

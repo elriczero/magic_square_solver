@@ -1,6 +1,6 @@
 import square_def
 from square_def import magic_square_node
-
+from square_def import a_star_search
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -11,19 +11,17 @@ if __name__ == '__main__':
     grid.append([0, 5, 7])
     grid.append([4, 9, 0])
 
-    m = magic_square_node(grid)
-    m.run_initialization()
-    m.display_information()
-    m.print_successors()
+    initial_node = magic_square_node(grid)
+    initial_node.run_initialization()
+    initial_node.display_information()
+    initial_node.print_successors()
 
-    # print(type(m.get_successors()))
-    # print(len(m.get_successors()))
-    #
-    # print(m.get_successors_states_grid(2))
+    a_star_search(initial_node)
+    # for i in range(len(initial_node.get_successors())):
+    #     print("\nNew Node: ", i)
+    #     ms_n = magic_square_node(initial_node.get_successors_states_grid(i),initial_node)
+    #     ms_n.run_initialization()
+    #     ms_n.display_information()
+    #     ms_n.print_successors()
 
-    for i in range(len(m.get_successors())):
-        print("\nNew Node: ", i)
-        ms_n = magic_square_node(m.get_successors_states_grid(i),m)
-        ms_n.run_initialization()
-        ms_n.display_information()
-        ms_n.print_successors()
+
