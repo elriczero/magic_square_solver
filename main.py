@@ -7,9 +7,9 @@ if __name__ == '__main__':
 
     # initialise empty 3 by 3 grid
     grid = []
-    grid.append([8, 1, 0])
+    grid.append([8, 0, 0])
     grid.append([0, 5, 7])
-    grid.append([4, 9, 0])
+    grid.append([4, 0, 0])
 
     initial_node = magic_square_node(grid)
     initial_node.run_initialization()

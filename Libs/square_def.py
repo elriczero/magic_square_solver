@@ -160,7 +160,10 @@ class magic_square_node:
                 new_grid[x][y] = number
                 # self.display_information()
                 grid_copy = copy.deepcopy(new_grid)
-                self.successor_state.append(grid_copy)
+                test_node = magic_square_node(grid_copy)
+                test_node.run_initialization()
+                if(test_node.isValidGridSum()):
+                    self.successor_state.append(grid_copy)
 
     def get_successors(self):
         return self.successor_state
@@ -196,3 +199,13 @@ class magic_square_node:
             return True
         else:
             return False
+
+    def isValidGridSum(self):
+        isValidSum = True
+        for sc in self.sum_cols:
+            if (sc > 15):
+                isValidSum = False
+        for sr in self.sum_rows:
+            if(sr > 15):
+                isValidSum = False
+        return isValidSum
