@@ -42,7 +42,7 @@ def a_star_search(starting_node):
         closed_set.append(open_set_node)  # Add the node to the closet set
         nodes_visited += 1
         # Check if Magic Square node is already completed
-        if open_set_node.isMagicSquareCompleted():
+        if open_set_node.isMagicSquareCompleted() and open_set_node.isValidGridSum():
             solutionFound = True
             print("Solution was found at ", nodes_visited)
             node_backchain_list = node_backchain(open_set_node)
@@ -203,9 +203,9 @@ class magic_square_node:
     def isValidGridSum(self):
         isValidSum = True
         for sc in self.sum_cols:
-            if (sc > 15):
+            if (sc <= 15):
                 isValidSum = False
         for sr in self.sum_rows:
-            if(sr > 15):
+            if(sr <= 15):
                 isValidSum = False
         return isValidSum
