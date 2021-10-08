@@ -4,6 +4,8 @@ from square_def import a_star_search
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    debugging_enabled = False
+    debugging_enabled = True
 
     # initialise empty 3 by 3 grid
     grid = []

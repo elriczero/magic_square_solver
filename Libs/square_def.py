@@ -17,8 +17,8 @@ def node_backchain(end_node):
     return return_path
 
 
-def a_star_search(starting_node):
-    solutionFound = False
+def a_star_search(starting_node, debugging_enabled=False):
+    solution_found = False
     nodes_visited = 0
     open_set = []
     closed_set = []
@@ -36,32 +36,41 @@ def a_star_search(starting_node):
         else:
             open_set_node = open_set.pop(winner_index)  # Start exploring Open Set Node
 
-        # print("\nWinner node is: {:d}\n_________________________".format(winner_index))
-        # open_set_node.display_information()
+        # ENABLE_DEBUG
+        if debugging_enabled and nodes_visited > 0:
+            print("\nWinner node is: {:d}\n_________________________".format(winner_index))
+            open_set_node.display_information()
+        # ENABLE_DEBUG
 
         closed_set.append(open_set_node)  # Add the node to the closet set
         nodes_visited += 1
         # Check if Magic Square node is already completed
-        if open_set_node.is_magic_square_completed():
-            solutionFound = True
-            print("Solution was found at ", nodes_visited)
+        if open_set_node.is_magic_square_completed() and open_set_node.is_valid_grid_sum():
+            solution_found = True
+            print("\n\nSolution was found at depth: ", nodes_visited)
             node_backchain_list = node_backchain(open_set_node)
             print("")
             for grid in node_backchain_list:
                 display_grid(grid)
                 print("")
-            return solutionFound
+            return solution_found
+        # ENABLE_DEBUG
+        if debugging_enabled:
+            print("\nChildren nodes are: \n__________________________")
+        # ENABLE_DEBUG
 
-        # print("\nChildren nodes are: \n__________________________")
         for i in range(len(open_set_node.get_successors())):
-            # print("\nNew Node: ", i)
+            if debugging_enabled:
+                print("\nNew Node: ", i)
             ms_n = MagicSquareNode(open_set_node.get_successors_states_grid(i), open_set_node)
             ms_n.run_initialization()
-            # ms_n.display_information()
+            if debugging_enabled:
+                ms_n.display_information()
             open_set.append(ms_n)
-            # ms_n.print_successors()
+            if debugging_enabled:
+                ms_n.print_successors()
     print("No solution was found...")
-    return solutionFound
+    return solution_found
 
 
 class MagicSquareNode:
@@ -169,7 +178,7 @@ class MagicSquareNode:
         return self.successor_state
 
     def print_successors(self):
-        print("\nSuccessor States are:")
+        print("\nSuccessor States are: ", len(self.successor_state))
         for successor in self.successor_state:
             display_grid(successor)
             print("")
