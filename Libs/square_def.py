@@ -70,9 +70,8 @@ def a_star_search(starting_node, debugging_enabled=False):
             if debugging_enabled:
                 ms_n.display_information()
             open_set.append(ms_n)
-            if debugging_enabled:
-                ms_n.print_successors()
-    print("No solution was found...")
+            # if debugging_enabled:
+            #     ms_n.print_successors()
     print("No solution was found after {} nodes visited.".format(nodes_visited))
     return solution_found
 
