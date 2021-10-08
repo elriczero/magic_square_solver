@@ -42,7 +42,7 @@ def a_star_search(starting_node):
         closed_set.append(open_set_node)  # Add the node to the closet set
         nodes_visited += 1
         # Check if Magic Square node is already completed
-        if open_set_node.isMagicSquareCompleted() and open_set_node.isValidGridSum():
+        if open_set_node.is_magic_square_completed():
             solutionFound = True
             print("Solution was found at ", nodes_visited)
             node_backchain_list = node_backchain(open_set_node)
@@ -55,7 +55,7 @@ def a_star_search(starting_node):
         # print("\nChildren nodes are: \n__________________________")
         for i in range(len(open_set_node.get_successors())):
             # print("\nNew Node: ", i)
-            ms_n = magic_square_node(open_set_node.get_successors_states_grid(i), open_set_node)
+            ms_n = MagicSquareNode(open_set_node.get_successors_states_grid(i), open_set_node)
             ms_n.run_initialization()
             # ms_n.display_information()
             open_set.append(ms_n)
@@ -64,7 +64,7 @@ def a_star_search(starting_node):
     return solutionFound
 
 
-class magic_square_node:
+class MagicSquareNode:
     def __init__(self, grid_start_state, parent=None):
         self.__numberOfRows = 3
         self.__numberOfCols = 3
@@ -160,9 +160,9 @@ class magic_square_node:
                 new_grid[x][y] = number
                 # self.display_information()
                 grid_copy = copy.deepcopy(new_grid)
-                test_node = magic_square_node(grid_copy)
+                test_node = MagicSquareNode(grid_copy)
                 test_node.run_initialization()
-                if(test_node.isValidGridSum()):
+                if (test_node.is_valid_grid_sum()):
                     self.successor_state.append(grid_copy)
 
     def get_successors(self):
@@ -182,9 +182,11 @@ class magic_square_node:
             return empty_list[index]
         return empty_list
 
+    # Actual traveled distance or how far are we from out goal
     def set_g(self):
         self.g = sum(self.sum_rows) + sum(self.sum_cols)
 
+    # Heuristics for the problem
     def set_h(self):
         self.h = 90 - self.g
 
@@ -194,18 +196,22 @@ class magic_square_node:
     def get_h(self):
         return self.h
 
-    def isMagicSquareCompleted(self):
+    def is_magic_square_completed(self):
+        result = True
+        if not self.is_valid_grid_sum():
+            result = False
+            return result
         if self.g == 90 and len(self.available_numbers) == 0:
             return True
         else:
             return False
 
-    def isValidGridSum(self):
-        isValidSum = True
+    def is_valid_grid_sum(self):
+        is_valid_sum = True
         for sc in self.sum_cols:
-            if (sc <= 15):
-                isValidSum = False
+            if sc <= 15:
+                is_valid_sum = False
         for sr in self.sum_rows:
-            if(sr <= 15):
-                isValidSum = False
-        return isValidSum
+            if sr <= 15:
+                is_valid_sum = False
+        return is_valid_sum
