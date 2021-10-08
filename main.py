@@ -26,6 +26,4 @@ if __name__ == '__main__':
     #     ms_n.display_information()
     #     ms_n.print_successors()
 
-    a_star_search(initial_node)
-
     a_star_search(initial_node, debugging_enabled)
