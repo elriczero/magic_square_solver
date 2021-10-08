@@ -62,7 +62,10 @@ def a_star_search(starting_node, debugging_enabled=False):
         for i in range(len(open_set_node.get_successors())):
             if debugging_enabled:
                 print("\nNew Node: ", i)
-            ms_n = MagicSquareNode(open_set_node.get_successors_states_grid(i), open_set_node)
+            initial_state = []
+            parent = open_set_node
+            initial_state = open_set_node.get_successors()
+            ms_n = MagicSquareNode(initial_state[i], parent)
             ms_n.run_initialization()
             if debugging_enabled:
                 ms_n.display_information()
@@ -70,6 +73,7 @@ def a_star_search(starting_node, debugging_enabled=False):
             if debugging_enabled:
                 ms_n.print_successors()
     print("No solution was found...")
+    print("No solution was found after {} nodes visited.".format(nodes_visited))
     return solution_found
 
 
@@ -169,10 +173,9 @@ class MagicSquareNode:
                 new_grid[x][y] = number
                 # self.display_information()
                 grid_copy = copy.deepcopy(new_grid)
-                test_node = MagicSquareNode(grid_copy)
-                test_node.run_initialization()
-                if (test_node.is_valid_grid_sum()):
-                    self.successor_state.append(grid_copy)
+                # test_node = MagicSquareNode(grid_copy)
+                # test_node.run_initialization()
+                self.successor_state.append(grid_copy)
 
     def get_successors(self):
         return self.successor_state
