@@ -36,8 +36,8 @@ def a_star_search(starting_node):
         else:
             open_set_node = open_set.pop(winner_index)  # Start exploring Open Set Node
 
-        print("\nWinner node is: {:d}\n_________________________".format(winner_index))
-        open_set_node.display_information()
+        # print("\nWinner node is: {:d}\n_________________________".format(winner_index))
+        # open_set_node.display_information()
 
         closed_set.append(open_set_node)  # Add the node to the closet set
         nodes_visited += 1
@@ -52,12 +52,12 @@ def a_star_search(starting_node):
                 print("")
             return solutionFound
 
-        print("\nChildren nodes are: \n__________________________")
+        # print("\nChildren nodes are: \n__________________________")
         for i in range(len(open_set_node.get_successors())):
-            print("\nNew Node: ", i)
+            # print("\nNew Node: ", i)
             ms_n = magic_square_node(open_set_node.get_successors_states_grid(i), open_set_node)
             ms_n.run_initialization()
-            ms_n.display_information()
+            # ms_n.display_information()
             open_set.append(ms_n)
             # ms_n.print_successors()
     print("No solution was found...")
