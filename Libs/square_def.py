@@ -50,10 +50,21 @@ def a_star_search(starting_node, debugging_enabled=False):
             print("\n\nSolution was found at depth: ", nodes_visited)
             node_backchain_list = node_backchain(open_set_node)
             print("")
-            for grid in node_backchain_list:
-                display_grid(grid)
-                print("")
-            return solution_found
+            # ENABLE BACKCHAIN PRINTING
+            enable_backchain_print = False
+            # enable_backchain_print = True
+            if enable_backchain_print:
+                for grid in node_backchain_list:
+                    display_grid(grid)
+                    print("")
+            open_set_node.display_grid()
+            stop_execution = input("Want to find more solutions?[Y/N]: ")
+            # Check if stop_execution it's different from an empty string
+            if stop_execution:
+                # Check if contains no
+                if str(stop_execution).lower().find('n') == 0:
+                    return solution_found
+
         # ENABLE_DEBUG
         if debugging_enabled:
             print("\nChildren nodes are: \n__________________________")
