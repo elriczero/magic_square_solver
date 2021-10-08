@@ -198,9 +198,6 @@ class MagicSquareNode:
 
     def is_magic_square_completed(self):
         result = True
-        if not self.is_valid_grid_sum():
-            result = False
-            return result
         if self.g == 90 and len(self.available_numbers) == 0:
             return True
         else:
@@ -209,9 +206,9 @@ class MagicSquareNode:
     def is_valid_grid_sum(self):
         is_valid_sum = True
         for sc in self.sum_cols:
-            if sc <= 15:
+            if sc < 15:
                 is_valid_sum = False
         for sr in self.sum_rows:
-            if sr <= 15:
+            if sr < 15:
                 is_valid_sum = False
         return is_valid_sum
